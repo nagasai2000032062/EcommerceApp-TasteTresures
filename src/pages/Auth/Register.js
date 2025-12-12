@@ -148,8 +148,8 @@ const Register = () => {
   // const [address, setAddress] = useState("");
   const [answer, setAnswer] = useState("");
 
-  const api="http://localhost:8081";
-  // const api="https://tastetresures-backend-production.up.railway.app";
+  // const api="http://localhost:8081";
+  const api="https://tastetresures-backend-production.up.railway.app";
   // cooldown timer for email resend
   useEffect(() => {
     let t;
