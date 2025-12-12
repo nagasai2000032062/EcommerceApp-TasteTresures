@@ -14,6 +14,7 @@ const MyOrders = () => {
   const [auth] = useAuth();
   const [searchOrderId, setSearchOrderId] = useState("");
 
+  const api="https://tastetresures-backend-production.up.railway.app";
   // Modal States
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
@@ -21,7 +22,7 @@ const MyOrders = () => {
   const getOrders = async () => {
     try {
       const { data } = await axios.get(
-        `/api/v1/orders/orders/buyer/${auth.user.id}`,
+        `${api}/api/v1/orders/orders/buyer/${auth.user.id}`,
         {
           headers: {
             Authorization: `Bearer ${auth?.token}`,
@@ -69,7 +70,7 @@ const MyOrders = () => {
       return message.error("You can not cancel this order you can able to cancel orders that are in processing.");
     }
         await axios.put(
-          `/api/v1/orders/order-status/${orderId}`,
+          `${api}/api/v1/orders/order-status/${orderId}`,
           { status: "CANCELLED" },
           { headers: { Authorization: `Bearer ${auth?.token}` } }
         );
@@ -89,7 +90,7 @@ const MyOrders = () => {
     }
 
     try {
-      await axios.delete(`/api/v1/orders/delete/${orderId}`, {
+      await axios.delete(`${api}/api/v1/orders/delete/${orderId}`, {
         headers: { Authorization: `Bearer ${auth?.token}` },
       });
       toast.success("Order deleted successfully");
@@ -104,7 +105,7 @@ const MyOrders = () => {
   const downloadPdf = async (orderId) => {
     try {
       const response = await axios.get(
-        `/api/v1/orders/${orderId}/pdf`,
+        `${api}/api/v1/orders/${orderId}/pdf`,
         { 
           responseType: "blob",
           headers: { Authorization: `Bearer ${auth?.token}` }
@@ -242,7 +243,7 @@ const MyOrders = () => {
                           className="d-flex align-items-center border rounded p-2 mb-2"
                         >
                           <img
-                            src={`/api/v1/product/product-photo/${product}/0`}
+                            src={`${api}/api/v1/product/product-photo/${product}/0`}
                             alt={item.productName}
                             width="80"
                             height="80"
@@ -295,7 +296,7 @@ const MyOrders = () => {
                 className="d-flex align-items-center border rounded p-2 mb-2"
               >
                 <img
-                  src={`/api/v1/product/product-photo/${item.productId}/0`}
+                  src={`${api}/api/v1/product/product-photo/${item.productId}/0`}
                   alt={item.productName}
                   width="80"
                   height="80"

@@ -411,6 +411,7 @@ const { RangePicker } = DatePicker;
 
 
 const AdminOrders = () => {
+  const api="https://tastetresures-backend-production.up.railway.app";
   const [statusOptions] = useState([
     "NOT_PROCESSED",
     "PROCESSING",
@@ -478,7 +479,7 @@ const AdminOrders = () => {
   // -------- API --------
   const getOrders = async () => {
     try {
-      const { data } = await axios.get("/api/v1/orders/all-orders", {
+      const { data } = await axios.get(`${api}/api/v1/orders/all-orders`, {
         headers: { Authorization: `Bearer ${auth?.token}` },
       });
       console.log(data);
@@ -497,7 +498,7 @@ const AdminOrders = () => {
   const handleChange = async (orderId, value) => {
     try {
       await axios.put(
-        `/api/v1/orders/order-status/${orderId}`,
+        `${api}/api/v1/orders/order-status/${orderId}`,
         { status: value },
         { headers: { Authorization: `Bearer ${auth?.token}` } }
       );
@@ -512,7 +513,7 @@ const AdminOrders = () => {
     const downloadPdf = async (orderId) => {
       try {
         const response = await axios.get(
-          `/api/v1/orders/${orderId}/pdf`,
+          `${api}/api/v1/orders/${orderId}/pdf`,
           { 
             responseType: "blob",
             headers: { Authorization: `Bearer ${auth?.token}` }
@@ -668,7 +669,7 @@ const AdminOrders = () => {
                         key={productId || idx}
                       >
                         <img
-                          src={`/api/v1/product/product-photo/${productId}/0`}
+                          src={`${api}/api/v1/product/product-photo/${productId}/0`}
                           alt={item.productName}
                           width="80"
                           height="80"
@@ -719,7 +720,7 @@ const AdminOrders = () => {
                       className="d-flex align-items-center border rounded p-2 mb-2"
                     >
                       <img
-                        src={`/api/v1/product/product-photo/${item.productId}/0`}
+                        src={`${api}/api/v1/product/product-photo/${item.productId}/0`}
                         alt={item.productName}
                         width="80"
                         height="80"

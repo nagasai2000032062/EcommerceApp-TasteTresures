@@ -11,7 +11,7 @@ const AdminManageAddress = () => {
   const [addresses, setAddresses] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [editingAddress, setEditingAddress] = useState(null);
-
+  const api="https://tastetresures-backend-production.up.railway.app";
   const [form, setForm] = useState({
     fullName: "",
     phoneNumber: "",
@@ -27,7 +27,7 @@ const AdminManageAddress = () => {
   // Fetch addresses
   const loadAddresses = async () => {
     try {
-      const { data } = await axios.get(`/api/v1/address/user/${userId}`, {
+      const { data } = await axios.get(`${api}/api/v1/address/user/${userId}`, {
         headers: { Authorization: `Bearer ${auth?.token}` },
       });
       console.log(data);
@@ -50,13 +50,13 @@ const AdminManageAddress = () => {
     try {
       if (editingAddress) {
         await axios.put(
-          `/api/v1/address/update/${userId}/${editingAddress.id}`,
+          `${api}/api/v1/address/update/${userId}/${editingAddress.id}`,
           form,
           { headers: { Authorization: `Bearer ${auth?.token}` } }
         );
         toast.success("Address updated successfully");
       } else {
-        await axios.post(`/api/v1/address/add/${userId}`, form, {
+        await axios.post(`${api}/api/v1/address/add/${userId}`, form, {
           headers: { Authorization: `Bearer ${auth?.token}` },
         });
         toast.success("Address added successfully");
@@ -97,7 +97,7 @@ const AdminManageAddress = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this address?")) return;
     try {
-      await axios.delete(`/api/v1/address/delete/${userId}/${id}`, {
+      await axios.delete(`${api}/api/v1/address/delete/${userId}/${id}`, {
         headers: { Authorization: `Bearer ${auth?.token}` },
       });
       toast.success("Address deleted successfully");
@@ -111,7 +111,7 @@ const AdminManageAddress = () => {
   const handleSetDefault = async (id) => {
     try {
       await axios.put(
-        `/api/v1/address/set-default/${userId}/${id}`,
+        `${api}/api/v1/address/set-default/${userId}/${id}`,
         {},
         { headers: { Authorization: `Bearer ${auth?.token}` } }
       );

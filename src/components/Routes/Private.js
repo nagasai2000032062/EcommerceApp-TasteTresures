@@ -8,6 +8,7 @@ export default function PrivateRoute() {
   const [ok, setOk] = useState(false);
   const [auth, setAuth] = useAuth();
 
+  const api="https://tastetresures-backend-production.up.railway.app";
   useEffect(() => {
     const authCheck = async () => {
       // const res = await axios.get("/api/v1/auth/user-auth");
@@ -20,7 +21,7 @@ export default function PrivateRoute() {
       //   setOk(false);
       // }
        try {
-      const res = await axios.get("/api/v1/auth/user-auth", {
+      const res = await axios.get(`${api}/api/v1/auth/user-auth`, {
         headers: {
           Authorization: `Bearer ${auth?.token}`,
         },

@@ -7,6 +7,7 @@ import { Select } from "antd";
 const { Option } = Select;
 const Users = () => {
 
+  const api="https://tastetresures-backend-production.up.railway.app";
   const [Roles] = useState([
       "ROLE_ADMIN",
       "ROLE_USER"
@@ -18,7 +19,7 @@ const [auth, setAuth] = useAuth();
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get("/api/v1/auth/users", {
+      const { data } = await axios.get(`${api}/api/v1/auth/users`, {
         headers: {
           Authorization: `Bearer ${auth?.token}`,
         },
@@ -39,7 +40,7 @@ const [auth, setAuth] = useAuth();
   const handleChange = async (userId, value) => {
     try {
       await axios.put(
-        `/api/v1/auth/update-role/${userId}`,
+        `${api}/api/v1/auth/update-role/${userId}`,
         { role: value },
         { headers: { Authorization: `Bearer ${auth?.token}` } }
       );

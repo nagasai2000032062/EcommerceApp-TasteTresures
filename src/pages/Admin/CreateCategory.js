@@ -13,11 +13,12 @@ const CreateCategory = () => {
   const [selected, setSelected] = useState(null);
   const [updatedName, setUpdatedName] = useState("");
   const [auth, setAuth] = useAuth();
+  const api="https://tastetresures-backend-production.up.railway.app";
   //handle Form
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/api/v1/category/create-category", {
+      const { data } = await axios.post(`${api}/api/v1/category/create-category`, {
         name,
       }, {
         headers: {
@@ -39,7 +40,7 @@ const CreateCategory = () => {
   //get all cat
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/get-category");
+      const { data } = await axios.get(`${api}/api/v1/category/get-category`);
       
       if (data?.success) {
         console.log(data);
@@ -60,7 +61,7 @@ const CreateCategory = () => {
     e.preventDefault();
     try {
       const { data } = await axios.put(
-        `/api/v1/category/update-category/${selected.id}`,
+        `${api}/api/v1/category/update-category/${selected.id}`,
         { name: updatedName }, {
         headers: {
           Authorization: `Bearer ${auth?.token}`,
@@ -85,7 +86,7 @@ const CreateCategory = () => {
   const handleDelete = async (pId) => {
     try {
       const { data } = await axios.delete(
-        `/api/v1/category/delete-category/${pId}`, {
+        `${api}/api/v1/category/delete-category/${pId}`, {
         headers: {
           Authorization: `Bearer ${auth?.token}`,
         },

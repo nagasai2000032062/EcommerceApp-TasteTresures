@@ -516,10 +516,11 @@ const CreateProduct = () => {
   const [variants, setVariants] = useState([{ weight: "", price: "" }]); // multiple variants
   const [auth] = useAuth();
 
+  const api="https://tastetresures-backend-production.up.railway.app";
   // Fetch categories
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/get-category");
+      const { data } = await axios.get(`${api}/api/v1/category/get-category`);
       if (data?.success) {
         setCategories(data?.data);
       }
@@ -594,7 +595,7 @@ const CreateProduct = () => {
       });
 
       // IMPORTANT: let Axios set the multipart boundary automatically
-      const { data } = await axios.post("/api/v1/product/create-product", formData, {
+      const { data } = await axios.post(`${api}/api/v1/product/create-product`, formData, {
         headers: {
           Authorization: `Bearer ${auth?.token}`,
         },

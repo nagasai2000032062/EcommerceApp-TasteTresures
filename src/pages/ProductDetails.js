@@ -639,6 +639,7 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [availability, setAvailability] = useState(false);
 
+  const api="https://tastetresures-backend-production.up.railway.app";
   // reviews state
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({ rating: 0, comment: "" });
@@ -653,13 +654,13 @@ const ProductDetails = () => {
   const getProduct = async () => {
     try {
       const { data } = await axios.get(
-        `/api/v1/product/get-product/${params.slug}`
+        `${api}/api/v1/product/get-product/${params.slug}`
       );
       const prod = data?.data.product;
       setProduct(prod);
 
       if (prod?.images?.length > 0) {
-        setSelectedImage(`/api/v1/product/product-photo/${prod.id}/0`);
+        setSelectedImage(`${api}/api/v1/product/product-photo/${prod.id}/0`);
       }
 
       if (prod?.prices?.length > 0) {
@@ -679,7 +680,7 @@ const ProductDetails = () => {
   const getSimilarProduct = async (pid, cid) => {
     try {
       const { data } = await axios.get(
-        `/api/v1/product/related-products/${pid}/${cid}`
+        `${api}/api/v1/product/related-products/${pid}/${cid}`
       );
       setRelatedProducts(data?.data);
     } catch (error) {
@@ -690,7 +691,7 @@ const ProductDetails = () => {
   // get reviews for product
   const getReviews = async (pid) => {
     try {
-      const { data } = await axios.get(`/api/v1/reviews/get-reviews/${pid}`);
+      const { data } = await axios.get(`${api}/api/v1/reviews/get-reviews/${pid}`);
       setReviews(data?.data || []);
     } catch (error) {
       console.log(error);
@@ -713,7 +714,7 @@ const ProductDetails = () => {
         comment: newReview.comment,
       };
       const { data } = await axios.post(
-        "/api/v1/reviews/create-review",
+        `${api}/api/v1/reviews/create-review`,
         reviewData
       );
 
@@ -797,7 +798,7 @@ const ProductDetails = () => {
             {product?.images?.map((img, index) => (
               <img
                 key={index}
-                src={`/api/v1/product/product-photo/${product.id}/${index}`}
+                src={`${api}/api/v1/product/product-photo/${product.id}/${index}`}
                 alt={`thumb-${index}`}
                 className="img-thumbnail me-2"
                 style={{
@@ -806,13 +807,13 @@ const ProductDetails = () => {
                   cursor: "pointer",
                   border:
                     selectedImage ===
-                    `/api/v1/product/product-photo/${product.id}/${index}`
+                    `${api}/api/v1/product/product-photo/${product.id}/${index}`
                       ? "2px solid #000"
                       : "1px solid #ddd",
                 }}
                 onClick={() =>
                   setSelectedImage(
-                    `/api/v1/product/product-photo/${product.id}/${index}`
+                    `${api}/api/v1/product/product-photo/${product.id}/${index}`
                   )
                 }
               />
@@ -994,7 +995,7 @@ const ProductDetails = () => {
           {relatedProducts?.map((p) => (
             <div className="card m-2" key={p.id} style={{ width: "18rem" }}>
               <img
-                src={`/api/v1/product/product-photo/${p.id}/0`}
+                src={`${api}/api/v1/product/product-photo/${p.id}/0`}
                 className="card-img-top"
                 alt={p.name}
               />

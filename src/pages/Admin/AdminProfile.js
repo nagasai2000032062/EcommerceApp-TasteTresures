@@ -8,6 +8,7 @@ import AdminMenu from "../../components/Layout/AdminMenu";
 const AdminProfile = () => {
   //context
   const [auth, setAuth] = useAuth();
+  const api="https://tastetresures-backend-production.up.railway.app";
   //state
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -37,7 +38,7 @@ const AdminProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.put("/api/v1/auth/profile", {
+      const { data } = await axios.put(`${api}/api/v1/auth/profile`, {
         name,
         email,
         password,

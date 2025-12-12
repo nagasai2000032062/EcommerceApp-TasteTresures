@@ -148,6 +148,8 @@ const Register = () => {
   // const [address, setAddress] = useState("");
   const [answer, setAnswer] = useState("");
 
+  const api="http://localhost:8081";
+  // const api="https://tastetresures-backend-production.up.railway.app";
   // cooldown timer for email resend
   useEffect(() => {
     let t;
@@ -172,7 +174,7 @@ const Register = () => {
       return;
     }
     try {
-      await axios.post("/api/v1/auth/otp/email/send", null, { params: { email } });
+      await axios.post(`${api}/api/v1/auth/otp/email/send`, null, { params: { email } });
       setEmailOtpSent(true);
       setEmailCooldown(60);
       toast.success("Email OTP sent");
@@ -188,7 +190,7 @@ const Register = () => {
       return;
     }
     try {
-      await axios.post("/api/v1/auth/otp/email/verify", null, {
+      await axios.post(`${api}/api/v1/auth/otp/email/verify`, null, {
         params: { email, otp: emailOtp },
       });
       setEmailVerified(true);
@@ -206,7 +208,7 @@ const Register = () => {
       return;
     }
     try {
-      const res = await axios.post("/api/v1/auth/register", {
+      const res = await axios.post(`${api}/api/v1/auth/register`, {
         name,
         email,
         password,

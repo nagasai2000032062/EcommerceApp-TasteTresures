@@ -12,10 +12,11 @@ const HomePage = () => {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
 
+  const api="https://tastetresures-backend-production.up.railway.app";
   // Fetch categories
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/get-category");
+      const { data } = await axios.get(`${api}/api/v1/category/get-category`);
       if (data?.success) {
         setCategories(data?.data);
       }
@@ -27,7 +28,7 @@ const HomePage = () => {
   // Fetch products
   const getAllProducts = async () => {
     try {
-      const { data } = await axios.get("/api/v1/product/get-product");
+      const { data } = await axios.get(`${api}/api/v1/product/get-product`);
       if (data?.success) {
         setProducts(data?.products);
       }
@@ -89,7 +90,7 @@ const getMinPrice = (product) => {
               {products?.map((p) => (
                 <div className="card m-2" key={p.id} style={{width:"250px"}}>
                   <img
-                    src={`/api/v1/product/product-photo/${p.id}/0`}
+                    src={`${api}/api/v1/product/product-photo/${p.id}/0`}
                     className="card-img-top"
                     alt={p.name}
                     style={{height:"200px"}}

@@ -236,6 +236,7 @@ const CategoryProduct = () => {
   const [tempPriceFilter, setTempPriceFilter] = useState({ min: 0, max: 0 }); // input values
   const [searchTerm, setSearchTerm] = useState(""); // search
 
+  const api="https://tastetresures-backend-production.up.railway.app";
   useEffect(() => {
     if (params?.slug) getProductsByCat();
   }, [params?.slug]);
@@ -244,7 +245,7 @@ const CategoryProduct = () => {
   const getProductsByCat = async () => {
     try {
       const { data } = await axios.get(
-        `/api/v1/product/product-category/${params.slug}`
+        `${api}/api/v1/product/product-category/${params.slug}`
       );
       setProducts(data?.data || []);
       console.log(data.data);
@@ -412,7 +413,7 @@ const CategoryProduct = () => {
               {filteredProducts?.map((p) => (
                 <div className="card m-2" key={p.id}>
                   <img
-                    src={`/api/v1/product/product-photo/${p.id}/0`}
+                    src={`${api}/api/v1/product/product-photo/${p.id}/0`}
                     className="card-img-top"
                     alt={p.name}
                   />

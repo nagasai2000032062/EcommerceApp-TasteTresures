@@ -6,11 +6,12 @@ const SearchInput = () => {
   const [values, setValues] = useSearch();
   const navigate = useNavigate();
 
+  const api="https://tastetresures-backend-production.up.railway.app";
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.get(
-        `/api/v1/product/search/${values.keyword}`
+        `${api}/api/v1/product/search/${values.keyword}`
       );
       setValues({ ...values, results: data.data });
       navigate("/search");

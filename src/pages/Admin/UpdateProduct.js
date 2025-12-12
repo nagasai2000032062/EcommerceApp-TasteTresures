@@ -10,6 +10,7 @@ const { Option } = Select;
 
 const UpdateProduct = () => {
   const navigate = useNavigate();
+  const api="https://tastetresures-backend-production.up.railway.app";
   const params = useParams();
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
@@ -24,7 +25,7 @@ const UpdateProduct = () => {
   // Fetch single product
   const getSingleProduct = async () => {
     try {
-      const { data } = await axios.get(`/api/v1/product/get-product/${params.slug}`);
+      const { data } = await axios.get(`${api}/api/v1/product/get-product/${params.slug}`);
       const product = data.data.product;
       console.log(product);
       setId(product.id);
@@ -58,7 +59,7 @@ const UpdateProduct = () => {
   // Fetch all categories
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/get-category");
+      const { data } = await axios.get(`${api}/api/v1/category/get-category`);
       if (data?.success) {
         setCategories(data?.data);
       }
@@ -132,7 +133,7 @@ const UpdateProduct = () => {
       });
 
       const { data } = await axios.put(
-        `/api/v1/product/update-product/${id}`,
+        `${api}/api/v1/product/update-product/${id}`,
         formData,
         {
           headers: {
@@ -162,7 +163,7 @@ const handleDelete = async () => {
   try {
     const answer = window.prompt("Are you sure you want to delete this product?");
     if (!answer) return;
-    await axios.delete(`/api/v1/product/delete-product/${id}`, {
+    await axios.delete(`${api}/api/v1/product/delete-product/${id}`, {
       headers: {
         Authorization: `Bearer ${auth?.token}`,
       },
@@ -229,7 +230,7 @@ const handleDelete = async () => {
                   {photos.map((file, index) => (
                     <img
                       key={index}
-                      src={file instanceof File ? URL.createObjectURL(file) : `/api/v1/product/product-photo/${id}/${index}`}
+                      src={file instanceof File ? URL.createObjectURL(file) : `${api}/api/v1/product/product-photo/${id}/${index}`}
                       alt="preview"
                       height="100px"
                       className="img img-responsive rounded"

@@ -117,10 +117,11 @@ import { imageToBase64 } from "./OrderPdf";
 export const generateOrderPDF = async (order) => {
   if (!order) return;
 
+  const api="https://tastetresures-backend-production.up.railway.app";
   // Convert all product images to base64
   const itemsWithBase64 = await Promise.all(
     order.items.map(async (item) => {
-      const imgUrl = `/api/v1/product/product-photo/${item.productId}/0`;
+      const imgUrl = `${api}/api/v1/product/product-photo/${item.productId}/0`;
       const base64 = await imageToBase64(imgUrl);
       return { ...item, base64Image: base64 };
     })

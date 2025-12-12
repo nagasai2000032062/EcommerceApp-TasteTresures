@@ -250,10 +250,11 @@ const Products = () => {
   const [tempPriceFilter, setTempPriceFilter] = useState({ min: 0, max: 0 }); // input values
   const [searchTerm, setSearchTerm] = useState(""); 
 
+  const api="https://tastetresures-backend-production.up.railway.app";
   // Fetch all products
   const getAllProducts = async () => {
     try {
-      const { data } = await axios.get("/api/v1/product/get-product");
+      const { data } = await axios.get(`${api}/api/v1/product/get-product`);
       if (data?.success) {
         setProducts(data.products);
         setFilteredProducts(data.products);
@@ -414,7 +415,7 @@ const Products = () => {
                 <div className="card m-2" style={{ width: "18rem" }}>
                   {p.images && p.images.length > 0 ? (
                     <img
-                      src={`/api/v1/product/product-photo/${p.id}/0`}
+                      src={`${api}/api/v1/product/product-photo/${p.id}/0`}
                       alt={p.name}
                       style={{ width: "100%", height: "200px", objectFit: "cover" }}
                       className="card-img-top"

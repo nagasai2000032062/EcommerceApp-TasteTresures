@@ -101,7 +101,7 @@ const ForgotPassword = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
   const [cooldown, setCooldown] = useState(0);
-
+  const api="https://tastetresures-backend-production.up.railway.app";
   const navigate = useNavigate();
 
   // cooldown timer
@@ -120,7 +120,7 @@ const ForgotPassword = () => {
       return;
     }
     try {
-      await axios.post("/api/v1/auth/otp/email/send", null, { params: { email } });
+      await axios.post(`${api}/api/v1/auth/otp/email/send`, null, { params: { email } });
       setOtpSent(true);
       setCooldown(60);
       toast.success("OTP sent to email");
@@ -136,7 +136,7 @@ const ForgotPassword = () => {
       return;
     }
     try {
-      await axios.post("/api/v1/auth/otp/email/verify", null, { params: { email, otp } });
+      await axios.post(`${api}/api/v1/auth/otp/email/verify`, null, { params: { email, otp } });
       setOtpVerified(true);
       toast.success("OTP verified, you can reset password now");
     } catch (err) {
@@ -152,7 +152,7 @@ const ForgotPassword = () => {
       return;
     }
     try {
-      const res = await axios.post("/api/v1/auth/forgot-password", null, {
+      const res = await axios.post(`${api}/api/v1/auth/forgot-password`, null, {
         params: { email, otp, newPassword },
       });
       if (res?.data?.success) {

@@ -12,6 +12,7 @@ const Profile = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
+  const api="https://tastetresures-backend-production.up.railway.app";
   // const [address, setAddress] = useState("");
 
   //get user data
@@ -36,7 +37,7 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.put("/api/v1/auth/profile", {
+      const { data } = await axios.put(`${api}/api/v1/auth/profile`, {
         name,
         email,
         password,

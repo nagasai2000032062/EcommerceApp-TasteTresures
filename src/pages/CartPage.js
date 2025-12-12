@@ -387,6 +387,7 @@ const CartPage = () => {
   const [cart, setCart] = useCart();
   const [loading, setLoading] = useState(false);
 
+  const api="https://tastetresures-backend-production.up.railway.app";
   const [addresses, setAddresses] = useState([]);
   const [deliveryAddress, setDeliveryAddress] = useState("");
 
@@ -430,7 +431,7 @@ const CartPage = () => {
   // Load addresses
   const loadAddresses = async () => {
     try {
-      const { data } = await axios.get(`/api/v1/address/user/${userId}`, {
+      const { data } = await axios.get(`${api}/api/v1/address/user/${userId}`, {
         headers: { Authorization: `Bearer ${auth?.token}` },
       });
 
@@ -451,7 +452,7 @@ const CartPage = () => {
   // Load Braintree token
   const loadBraintreeToken = async () => {
     try {
-      const { data } = await axios.get("/api/v1/orders/braintree/token", {
+      const { data } = await axios.get(`${api}/api/v1/orders/braintree/token`, {
         headers: { Authorization: `Bearer ${auth?.token}` },
       });
       setClientToken(data.clientToken);
@@ -492,7 +493,7 @@ const CartPage = () => {
       const { nonce } = await instance.requestPaymentMethod();
 
       const { data } = await axios.post(
-        "/api/v1/orders/braintree/checkout",
+        `${api}/api/v1/orders/braintree/checkout`,
         {
           paymentMethodNonce: nonce,
           cart,
@@ -530,7 +531,7 @@ const CartPage = () => {
     try {
       setLoading(true);
       const { data } = await axios.post(
-        "/api/v1/orders/razorpay/order",
+        `${api}/api/v1/orders/razorpay/order`,
         { cart, email: auth.user.email, address: deliveryAddress },
         { headers: { Authorization: `Bearer ${auth?.token}` } }
       );
@@ -543,7 +544,7 @@ const CartPage = () => {
         order_id: data.orderId,
         handler: async (response) => {
           await axios.post(
-            "/api/v1/orders/razorpay/verify",
+            `${api}/api/v1/orders/razorpay/verify`,
             {
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_order_id: response.razorpay_order_id,
@@ -580,12 +581,12 @@ const CartPage = () => {
     e.preventDefault();
     try {
       if (editingAddress) {
-        await axios.put(`/api/v1/address/update/${userId}/${editingAddress.id}`, form, {
+        await axios.put(`${api}/api/v1/address/update/${userId}/${editingAddress.id}`, form, {
           headers: { Authorization: `Bearer ${auth?.token}` },
         });
         toast.success("Address updated successfully");
       } else {
-        await axios.post(`/api/v1/address/add/${userId}`, form, {
+        await axios.post(`${api}/api/v1/address/add/${userId}`, form, {
           headers: { Authorization: `Bearer ${auth?.token}` },
         });
         toast.success("Address added successfully");
@@ -615,7 +616,7 @@ const CartPage = () => {
             {cart.length === 0 && <div className="card p-4 text-center shadow-sm">No items in the cart.</div>}
             {cart.map((item, idx) => (
               <div key={`${item.id}-${idx}`} className="card mb-3 shadow-sm p-3 d-flex flex-row align-items-center">
-                <img src={item.image || `/api/v1/product/braintree/photo/${item.id}/0`} alt={item.name}
+                <img src={item.image || `${api}/api/v1/product/braintree/photo/${item.id}/0`} alt={item.name}
                      className="img-fluid rounded me-3" style={{ width: 100, height: 100, objectFit: "cover" }} />
                 <div className="flex-grow-1">
                   <h5 className="mb-1">{item.name}</h5>
