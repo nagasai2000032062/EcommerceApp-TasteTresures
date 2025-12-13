@@ -150,6 +150,7 @@ const Register = () => {
 
   // const api="http://localhost:8081";
   const api="https://tastetresures-backend-production.up.railway.app";
+  
   // cooldown timer for email resend
   useEffect(() => {
     let t;
