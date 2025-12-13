@@ -150,7 +150,7 @@ const Register = () => {
 
   // const api="http://localhost:8081";
   const api="https://tastetresures-backend-production.up.railway.app";
-  
+
   // cooldown timer for email resend
   useEffect(() => {
     let t;
@@ -175,6 +175,7 @@ const Register = () => {
       return;
     }
     try {
+      console.log("otp...");
       await axios.post(`${api}/api/v1/auth/otp/email/send`, null, { params: { email } });
       setEmailOtpSent(true);
       setEmailCooldown(60);
